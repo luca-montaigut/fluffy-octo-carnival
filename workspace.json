@@ -102,6 +102,107 @@
           }
         }
       }
+    },
+    "two": {
+      "root": "apps/two",
+      "sourceRoot": "apps/two/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/two",
+            "index": "apps/two/src/index.html",
+            "baseHref": "/",
+            "main": "apps/two/src/main.tsx",
+            "polyfills": "apps/two/src/polyfills.ts",
+            "tsConfig": "apps/two/tsconfig.app.json",
+            "assets": ["apps/two/src/favicon.ico", "apps/two/src/assets"],
+            "styles": ["apps/two/src/styles.css"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/two/src/environments/environment.ts",
+                  "with": "apps/two/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "two:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "two:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/two/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/two"],
+          "options": {
+            "jestConfig": "apps/two/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "two-e2e": {
+      "root": "apps/two-e2e",
+      "sourceRoot": "apps/two-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/two-e2e/cypress.json",
+            "devServerTarget": "two:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "two:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/two-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
     }
   },
   "cli": {

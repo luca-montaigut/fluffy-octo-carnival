@@ -33,6 +33,13 @@
     "one-e2e": {
       "tags": [],
       "implicitDependencies": ["one"]
+    },
+    "two": {
+      "tags": []
+    },
+    "two-e2e": {
+      "tags": [],
+      "implicitDependencies": ["two"]
     }
   }
 }
